@@ -12,6 +12,7 @@ class ExpertDashboardPage extends StatelessWidget {
     required this.inspections,
     required this.dashboard,
     required this.canViewHistory,
+    required this.canViewPersonalCommissions,
     required this.canCreateInspection,
     required this.onRefresh,
     required this.onCreateInspection,
@@ -26,6 +27,7 @@ class ExpertDashboardPage extends StatelessWidget {
   final List<Map<String, dynamic>> inspections;
   final Map<String, dynamic> dashboard;
   final bool canViewHistory;
+  final bool canViewPersonalCommissions;
   final bool canCreateInspection;
   final Future<void> Function() onRefresh;
   final VoidCallback onCreateInspection;
@@ -100,6 +102,18 @@ class ExpertDashboardPage extends StatelessWidget {
                 ),
               ],
             ),
+          if (canViewPersonalCommissions) ...[
+            if (canViewHistory) const SizedBox(height: 18),
+            DashboardStatCards(
+              cards: [
+                DashboardStatCard(
+                  label: 'Gains versés (DH)',
+                  value: '${dashboard['paid_commissions_total'] ?? '0.00'}',
+                  icon: Icons.account_balance_wallet_outlined,
+                ),
+              ],
+            ),
+          ],
           if (months.isNotEmpty) ...[
             const SizedBox(height: 18),
             DashboardTrendChart(

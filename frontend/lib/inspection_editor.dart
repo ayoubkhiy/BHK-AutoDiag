@@ -1202,7 +1202,7 @@ class _InspectionEditorPageState extends State<InspectionEditorPage> {
                       fit: StackFit.expand,
                       children: [
                         Image.asset(
-                          'assets/voiture.png',
+                          'assets/voiture2.png',
                           key: const Key('vehicle-car-photo'),
                           fit: BoxFit.contain,
                         ),

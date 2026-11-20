@@ -97,7 +97,7 @@ Future<Uint8List> buildInspectionPdf(
   pw.Widget section(String title) => _sectionTitle(localize(title));
   final companyName = company['name']?.toString().trim().isNotEmpty == true
       ? company['name'].toString().trim()
-      : localize('BHK  •  DIAGNOSTIC AUTOMOBILE');
+      : localize('DIAGNOSTIC AUTOMOBILE');
   final companyContact =
       [
             company['address'],
@@ -125,7 +125,7 @@ Future<Uint8List> buildInspectionPdf(
     (await rootBundle.load('assets/QRWEB.png')).buffer.asUint8List(),
   );
   final vehiclePhoto = pw.MemoryImage(
-    (await rootBundle.load('assets/voiture.png')).buffer.asUint8List(),
+    (await rootBundle.load('assets/voiture2.png')).buffer.asUint8List(),
   );
   final document = pw.Document();
 
@@ -449,17 +449,20 @@ pw.Widget _bodyDiagram(
         pw.Positioned(
           left: zone.left,
           top: zone.top,
-          child: pw.Container(
-            width: zone.width,
-            height: zone.height,
-            decoration: pw.BoxDecoration(
-              color: _pdfZoneColor(
-                body[zone.key]?['status'] as String? ?? 'Original',
-              ),
-              borderRadius: pw.BorderRadius.circular(2),
-              border: pw.Border.all(
-                color: const PdfColor(1, 1, 1, .7),
-                width: .4,
+          child: pw.Opacity(
+            opacity: .4,
+            child: pw.Container(
+              width: zone.width,
+              height: zone.height,
+              decoration: pw.BoxDecoration(
+                color: _pdfZoneColor(
+                  body[zone.key]?['status'] as String? ?? 'Original',
+                ),
+                borderRadius: pw.BorderRadius.circular(2),
+                border: pw.Border.all(
+                  color: const PdfColor(1, 1, 1, .7),
+                  width: .4,
+                ),
               ),
             ),
           ),
@@ -474,7 +477,6 @@ PdfColor _pdfZoneColor(String status) {
     ((color >> 16) & 0xFF) / 255,
     ((color >> 8) & 0xFF) / 255,
     (color & 0xFF) / 255,
-    status == 'Original' ? .26 : .42,
   );
 }
 

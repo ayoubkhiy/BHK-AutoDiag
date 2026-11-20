@@ -626,6 +626,14 @@ class InspectionApiTests(TestCase):
             content_type='application/json',
         )
         self.assertEqual(validated.json()['status'], 'validated')
+        self.client.defaults['HTTP_AUTHORIZATION'] = (
+            f'Bearer {self._token_for(self.expert)}'
+        )
+        unpaid_dashboard = self.client.get(reverse('api-dashboard')).json()
+        self.assertEqual(unpaid_dashboard['paid_commissions_total'], '0.00')
+        self.client.defaults['HTTP_AUTHORIZATION'] = (
+            f'Bearer {self._token_for(admin)}'
+        )
         paid = self.client.patch(
             commission_url,
             data={'status': 'paid'},
@@ -660,6 +668,7 @@ class InspectionApiTests(TestCase):
         personal_dashboard = self.client.get(reverse('api-dashboard')).json()
         self.assertNotIn('revenue_total', personal_dashboard)
         self.assertNotIn('revenue', personal_dashboard['monthly_activity'][-1])
+        self.assertEqual(personal_dashboard['paid_commissions_total'], '120.00')
 
     def test_listing_visibility_is_owner_scoped_until_admin_publishes(self):
         self._grant(self.expert, 'add_listing', 'view_listings')

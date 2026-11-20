@@ -67,7 +67,7 @@ flutter:
   assets:
     - assets/logoo.png
     - assets/QRWEB.png
-    - assets/voiture.png
+    - assets/voiture2.png
 
   fonts:
     - family: Cairo

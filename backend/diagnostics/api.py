@@ -839,6 +839,15 @@ def dashboard(request):
                                  - (commissions_total or Decimal('0'))),
         })
     else:
+        permissions = _permissions(user)
+        if (
+            permissions['view_personal_commissions']
+            or permissions['view_global_finances']
+        ):
+            paid_commissions_total = commissions.filter(
+                status=Commission.Status.PAID,
+            ).exclude(amount=None).aggregate(total=Sum('amount'))['total']
+            response['paid_commissions_total'] = _money(paid_commissions_total)
         response['commissions'] = [
             _commission_payload(item)
             for item in commissions.select_related('inspection', 'inspection__expert')

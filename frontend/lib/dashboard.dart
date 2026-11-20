@@ -40,6 +40,10 @@ class _BhkDashboardState extends State<BhkDashboard> {
       widget.user.permissions['view_history'] == true ||
       widget.user.permissions['view_reports'] == true;
 
+  bool get _canViewPersonalCommissions =>
+      widget.user.permissions['view_personal_commissions'] == true ||
+      widget.user.permissions['view_global_finances'] == true;
+
   bool get _canCreateInspection =>
       widget.user.isAdmin ||
       widget.user.permissions['create_inspection'] == true;
@@ -579,6 +583,7 @@ class _BhkDashboardState extends State<BhkDashboard> {
       inspections: _inspections,
       dashboard: _dashboard,
       canViewHistory: _canViewHistory,
+      canViewPersonalCommissions: _canViewPersonalCommissions,
       canCreateInspection: _canCreateInspection,
       onRefresh: _refreshDashboard,
       onCreateInspection: _createInspection,

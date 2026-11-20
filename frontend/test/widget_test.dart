@@ -130,6 +130,7 @@ void main() {
             inspections: const [],
             dashboard: const {},
             canViewHistory: true,
+            canViewPersonalCommissions: false,
             canCreateInspection: false,
             onRefresh: () async {},
             onCreateInspection: () {},
@@ -1019,6 +1020,7 @@ void main() {
     final pdfContents = latin1.decode(bytes);
     expect(pdfContents, contains('/Width 1024'));
     expect(pdfContents, contains('/Height 1536'));
+    expect(pdfContents, contains('/ca 0.4'));
   });
 }
 
